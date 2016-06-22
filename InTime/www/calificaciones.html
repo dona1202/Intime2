@@ -1,0 +1,223 @@
+<!DOCTYPE HTML>
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Calificaciones</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<script src="cordova.js"></script>
+		<script type="text/javascript" charset="utf-8">
+
+        // Wait for Intime to load
+        //
+        document.addEventListener("deviceready", onDeviceReady, false);
+
+        var currentRow;
+        // Populate the database
+        //
+        function populateDB(tx) {
+            tx.executeSql('CREATE TABLE IF NOT EXISTS CALIFICACIONES (id INTEGER PRIMARY KEY AUTOINCREMENT, name,pr1,pr2,pr3)');
+        }
+
+        // Query the database
+        //
+        function queryDB(tx) {
+            tx.executeSql('SELECT * FROM CALIFICACIONES', [], querySuccess, errorCB);
+        }
+
+        function searchQueryDB(tx) {
+            tx.executeSql("SELECT * FROM CALIFICACIONES where name like ('%"+ document.getElementById("txtName").value + "%')",
+                    [], querySuccess, errorCB);
+        }
+        // Query the success callback
+        //
+        function querySuccess(tx, results) {
+            var tblText='<table id="t01"><tr><th>ID</th><th>Materia</th> <th>Parcial 1</th> <th>Parcial 2</th> <th>Parcial 3</th></tr>';
+            var len = results.rows.length;
+            for (var i = 0; i < len; i++) {
+                var tmpArgs=results.rows.item(i).id + ",'" + results.rows.item(i).name+ "','" + results.rows.item(i).pr1+
+                "','" + results.rows.item(i).pr2+"','" + results.rows.item(i).pr3+"'";
+
+                tblText +='<tr onclick="goPopup('+ tmpArgs + ');"><td>'+ results.rows.item(i).id +'</td><td>'
+                        + results.rows.item(i).name +'</td><td>' + results.rows.item(i).pr1 +'</td><td>'+results.rows.item(i).pr2 +'</td><td>'+results.rows.item(i).pr3 +'</td>'+'</tr>';
+            }
+            tblText +="</table>";
+            document.getElementById("tblDiv").innerHTML =tblText;
+        }
+
+        //Delete query
+        function deleteRow(tx) {
+          tx.executeSql('DELETE FROM CALIFICACIONES WHERE id = ' + currentRow, [], queryDB, errorCB);
+        }
+
+        // Transaction error callback
+        //
+        function errorCB(err) {
+            alert("Error processing SQL: "+err.message);
+        }
+
+        // Transaction success callback
+        //
+        function successCB() {
+            var db = window.openDatabase("Intime", "1.0", "Intime Demo", 200000);
+            db.transaction(queryDB, errorCB);
+        }
+
+         // Intime is ready
+        //
+        function onDeviceReady() {
+            var db = window.openDatabase("Intime", "1.0", "Intime Demo", 200000);
+            db.transaction(populateDB, errorCB, successCB);
+        }
+
+        //Insert query
+        //
+        function insertDB(tx) {
+            tx.executeSql('INSERT INTO CALIFICACIONES (name,pr1,pr2,pr3) VALUES ("' +document.getElementById("txtName").value+'","'
+            		+document.getElementById("p1").value +'", "'+document.getElementById("p2").value +'","'+document.getElementById("p3").value+'")');
+        }
+
+        function goInsert() {
+            var db = window.openDatabase("Intime", "1.0", "Intime Demo", 200000);
+            db.transaction(insertDB, errorCB, successCB);
+        }
+
+        function goSearch() {
+            var db = window.openDatabase("Intime", "1.0", "Intime Demo", 200000);
+            db.transaction(searchQueryDB, errorCB);
+        }
+
+        function goDelete() {
+             var db = window.openDatabase("Intime", "1.0", "Intime Demo", 200000);
+             db.transaction(deleteRow, errorCB);
+             document.getElementById('qrpopup').style.display='none';
+        }
+
+        //Show the popup after tapping a row in table
+        //
+        function goPopup(row,rowname,rowpr1,rowpr2,rowpr3) {
+            currentRow=row;
+            document.getElementById("qrpopup").style.display="block";
+            document.getElementById("editNameBox").value = rowname;
+            document.getElementById("editp1").value = rowpr1;
+            document.getElementById("editp2").value = rowpr2;
+            document.getElementById("editp3").value = rowpr3;
+        }
+
+        function editRow(tx) {
+            tx.executeSql('UPDATE CALIFICACIONES SET name ="'+document.getElementById("editNameBox").value+
+                    '", pr1= "'+document.getElementById("editp1").value+
+                    '", pr2= "'+document.getElementById("editp2").value+
+                    '", pr3= "'+document.getElementById("editp3").value+ '" WHERE id = '
+                    + currentRow, [], queryDB, errorCB);
+        }
+        function goEdit() {
+            var db = window.openDatabase("Intime", "1.0", "Intime Demo", 200000);
+            db.transaction(editRow, errorCB);
+            document.getElementById('qrpopup').style.display='none';
+        }
+
+    </script>
+	</head>
+	<body>
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<div class="inner">
+
+							<!-- Logo -->
+								<a href="index.html" class="logo">
+									<span class="symbol"><img src="images/logo.svg" alt="" /></span><span class="title">Calificaciones</span>
+								</a>
+
+							<!-- Nav -->
+								<nav>
+									<ul>
+										<li><a href="#menu">Menu</a></li>
+									</ul>
+								</nav>
+
+						</div>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<h2>Menu</h2>
+						<ul>
+							<li><a href="index.html">Home</a></li>
+							<li><a href="calificaciones.html">Calificaciones</a></li>
+							<li><a href="generic.html">Agenda</a></li>
+							<li><a href="generic.html">About</a></li>							
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+							<div id="qrpopup" > 
+            					<hr/>
+            					<input type="text" id="editNameBox"><br>
+            					<input type="text" id="editp1"><br>
+            					<input type="text" id="editp2"><br>
+            					<input type="text" id="editp3"><br>
+            					<button onclick="goDelete()">Borrar</button>
+            					<button onclick="goEdit()">Editar</button>
+            					<button onclick="document.getElementById('qrpopup').style.display='none';">Cancelar</button>
+    						</div>
+						</div>
+					</div>
+					<div id="tblDiv">
+						
+					</div>
+					<br><br>
+					<h3>Nueva Materia</h3>
+					<div>
+					    <input type="text" placeHolder="Nombre Materia" id="txtName">
+					    <input type="text" placeholder="Primer Parcial" id="p1">
+					    <input type="text" placeholder="Segundo Parcial" id="p2">
+					    <input type="text" placeholder="Tercer Parcial" id="p3">
+					</div>
+					<div id="tblDiv">
+						
+					</div>
+					    <div>
+					    	<br>
+					        <button style="margin:1%;" onclick="goInsert()">Guardar</button>
+					        <button style="margin:1%;" onclick="goSearch()">Buscar</button>
+					        <button style="margin:1%;" onclick="successCB()">Mostrar Todo</button>
+    					</div>
+				<!-- Footer -->
+					<footer id="footer">
+						<div class="inner">
+							<section>
+								
+							</section>
+							<section>
+								
+							<ul class="copyright">
+								<li>&copy; Donus Patronus</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+							</ul>
+						</div>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
