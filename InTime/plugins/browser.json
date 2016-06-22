@@ -1,0 +1,72 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-battery-status": {
+            "PACKAGE_NAME": "com.phonegap.Intime"
+        },
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "com.phonegap.Intime"
+        },
+        "cordova-plugin-media-capture": {
+            "PACKAGE_NAME": "com.phonegap.Intime"
+        },
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "com.phonegap.Intime"
+        },
+        "cordova-plugin-contacts": {
+            "PACKAGE_NAME": "com.phonegap.Intime"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.phonegap.Intime"
+        },
+        "cordova-plugin-device-motion": {
+            "PACKAGE_NAME": "com.phonegap.Intime"
+        },
+        "cordova-plugin-device-orientation": {
+            "PACKAGE_NAME": "com.phonegap.Intime"
+        },
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "com.phonegap.Intime"
+        },
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "com.phonegap.Intime"
+        },
+        "cordova-plugin-file-transfer": {
+            "PACKAGE_NAME": "com.phonegap.Intime"
+        },
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "com.phonegap.Intime"
+        },
+        "cordova-plugin-globalization": {
+            "PACKAGE_NAME": "com.phonegap.Intime"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "com.phonegap.Intime"
+        },
+        "cordova-plugin-media": {
+            "PACKAGE_NAME": "com.phonegap.Intime"
+        },
+        "cordova-plugin-network-information": {
+            "PACKAGE_NAME": "com.phonegap.Intime"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.phonegap.Intime"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.phonegap.Intime"
+        },
+        "cordova-plugin-vibration": {
+            "PACKAGE_NAME": "com.phonegap.Intime"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.phonegap.Intime"
+        }
+    },
+    "dependent_plugins": {}
+}
